@@ -10,9 +10,13 @@ def showHelp(err_msg=None):
 	print "python simple_git_download.py https://github.com/nemon-/simple_git_download.git . down"
 
 def outFile(s,f='./log.log'):
-	f= open(f,'wb')
-	f.write(s)
-	f.close()
+	print 'write file: ',f
+	try:
+		f= open(f,'wb')
+		f.write(s)
+		f.close()
+	except:
+		print 'ERROR !'
 
 def creatDir(arry_path):
 	import os
@@ -21,13 +25,17 @@ def creatDir(arry_path):
 		os.makedirs(  work_path )
 
 def getUrlContent(work_url):
-	#print 'getUrlContent:',work_url
-	sf = urllib.urlopen(work_url)
-	# html = sf.readlines()
-	# htmls = ''.join(html)
-	str =sf.read()
-	sf.close()
-	return str
+	print 'open url content: ',work_url
+	s=''
+	try:
+		sf = urllib.urlopen(work_url)
+		# html = sf.readlines()
+		# htmls = ''.join(html)
+		s =sf.read()
+		sf.close()
+	except:
+		print 'ERROR !'
+	return s
 
 def getMinTagStart(html_str,sTag):
 	i1_1 = html_str.find('<'+sTag+'>')
@@ -94,8 +102,10 @@ def findAllList(work_url,arry_tgt,str_type,s_root):
 		tmps=htmls[ipos:]
 		tmpa=getHrefAndName(tmps)
 		agl.append( ('file',arry_tgt[::],s_root+tmpa[0]) )
+		print 'find file: '+ s_root+tmpa[0]
 	else:
 		agl.append( ('path',arry_tgt[::],url) )
+		print 'search path: '+ url
 		tmpl=getList(htmls)
 		for i in tmpl:
 			arry_tgt.append( i[1] )

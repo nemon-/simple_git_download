@@ -7,23 +7,15 @@ class git_down():
 		self._target_path=['.']
 		self._output_type='wget'
 		self._src_root=r'https://github.com'
-	
-	def showHelp(self,err_msg=None):
-		if err_msg :
-			print err_msg
-		print "USAGE:"
-		print "python simple_git_download.py src_url target_path [down|wget]"
-		print "EXAMPLE:"
-		print "python simple_git_download.py https://github.com/nemon-/simple_git_download.git . down"
-	
+		
 	def outFile(self,s,f='./log.log'):
 		print 'write file: ',f
 		try:
 			f= open(f,'wb')
 			f.write(s)
 			f.close()
-		except:
-			print 'ERROR !'
+		except Exception as e:
+			print 'ERROR !',e
 	
 	def creatDir(self,arry_path):
 		import os
@@ -40,9 +32,10 @@ class git_down():
 			# htmls = ''.join(html)
 			s =sf.read()
 			sf.close()
-		except:
-			print 'ERROR !'
-		return s
+		except Exception as e:
+			print 'ERROR !',e
+		finally:
+			return s
 	
 	def getMinTagStart(self,html_str,sTag):
 		i1_1 = html_str.find('<'+sTag+'>')
@@ -142,13 +135,21 @@ class git_down():
 				for i in agl:
 					print i
 		else:
-			return self.showHelp('parameter error.')
+			raise Exception , 'parameter error.'
+
+def showCLIHelp(err_msg=None):
+	if err_msg :
+		print err_msg
+	print "USAGE:"
+	print "python simple_git_download.py src_url target_path [down|wget]"
+	print "EXAMPLE:"
+	print "python simple_git_download.py https://github.com/nemon-/simple_git_download.git . down"
 
 if __name__ == '__main__':
 	import sys
 	git_down_agent = git_down()
 	if len( sys.argv)<3:
-		git_down_agent.showHelp()
+		showCLIHelp()
 	else:
 		"""
 		tmp ={}
@@ -180,11 +181,11 @@ if __name__ == '__main__':
 				arry_src[1] = arry_src[1][0:-4]
 			# print 'arry_src:',arry_src
 			if ( len(arry_src)>1 and len(arry_src)<2 ):
-				git_down_agent.showHelp('MUST WITH tree/master .')
+				showCLIHelp('MUST WITH tree/master .')
 			elif ( len(arry_src)>2 and arry_src[2]!='tree'):
-				git_down_agent.showHelp('MUST WITH tree/master  .')
+				showCLIHelp('MUST WITH tree/master  .')
 			elif ( len(arry_src)>=3 and arry_src[3]!='master'):
-				git_down_agent.showHelp('MUST WITH tree/master ..')
+				showCLIHelp('MUST WITH tree/master ..')
 			else:
 				if arry_src[-1]=='':
 					arry_src.pop()

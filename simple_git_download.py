@@ -173,7 +173,7 @@ if __name__ == '__main__':
 
 		arry_src = para_src.split(r'/')
 		if not( len(arry_src)>=4 ):
-			git_down_agent.showHelp('MUST WITH project name.')
+			showCLIHelp('MUST WITH project name.')
 		else:
 			s_src_root = arry_src[0] +r'//' +arry_src[2] # 'https://github.com'
 			arry_src = arry_src[3:]

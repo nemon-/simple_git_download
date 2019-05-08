@@ -1,4 +1,14 @@
 # -*- coding: utf-8 -*-
+
+#######################
+# file    : simple_git_download.py
+# author  : nemon (nemon@aliyun.com)
+# version : 1.0.0
+# document: https://github.com/nemon-/simple_git_download/blob/master/README.md
+# project : https://github.com/nemon-/simple_git_download
+# licence : MIT License (https://github.com/nemon-/simple_git_download/blob/master/LICENSE)
+#######################
+
 import urllib
 
 class git_down():
